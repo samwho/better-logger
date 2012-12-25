@@ -1,8 +1,7 @@
 module Better
   module Logger
     class Config
-      attr_writer :color, :formatter, :log_to, :datetime_format, :log_level,
-        :error_to, :time_format
+      attr_writer :color, :formatter, :datetime_format, :log_level, :time_format
 
       def color
         @color = true if @color.nil?
@@ -17,8 +16,24 @@ module Better
         @log_to ||= STDOUT
       end
 
+      def log_to= new_log_to
+        if new_log_to.is_a? String
+          @log_to = File.open(new_log_to, 'a')
+        else
+          @log_to = new_log_to
+        end
+      end
+
       def error_to
         @error_to ||= STDERR
+      end
+
+      def error_to= new_error_to
+        if new_error_to.is_a? String
+          @error_to = File.open(new_error_to, 'a')
+        else
+          @error_to = new_error_to
+        end
       end
 
       def log_level

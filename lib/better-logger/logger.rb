@@ -5,14 +5,6 @@ module Better
 
       def initialize config
         @config = config
-
-        if config.log_to.is_a? String
-          config.log_to = File.open(config.log_to, 'a')
-        end
-
-        if config.error_to.is_a? String
-          config.error_to = File.open(config.error_to, 'a')
-        end
       end
 
       def debug msg; _log config.log_to, __method__,   msg; end;
