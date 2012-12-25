@@ -149,4 +149,43 @@ describe Better::Logger do
       it      { should be_empty }
     end
   end
+
+  describe "Silent flag" do
+    before :each do
+      Better::Logger.config :log do |conf|
+        conf.color     = true
+        conf.log_to    = fake_stdout
+        conf.error_to  = fake_stderr
+        conf.log_level = :silent
+      end
+    end
+
+    describe "log#fatal" do
+      subject { fake_stderr_content }
+      before  { log.fatal "Should not be output." }
+      it      { should be_empty }
+    end
+  end
+
+  describe "Modifying log after creation" do
+    before :each do
+      Better::Logger.config :log do |conf|
+        conf.color     = true
+        conf.log_to    = fake_stdout
+        conf.error_to  = fake_stderr
+        conf.log_level = :info
+      end
+    end
+
+    describe "log#info after log_to changed to fake_stderr" do
+      subject { fake_stderr_content }
+
+      before do
+        log.config.log_to = fake_stderr
+        log.info "Testing!"
+      end
+
+      it { should include "Testing!" }
+    end
+  end
 end

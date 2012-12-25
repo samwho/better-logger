@@ -1,11 +1,12 @@
 module Better
   module Logger
     LEVELS = {
-      debug: 0,
-      info:  1,
-      warn:  2,
-      error: 3,
-      fatal: 4
+      debug:  0,
+      info:   1,
+      warn:   2,
+      error:  3,
+      fatal:  4,
+      silent: 100,
     }
 
     def self.config log_name = :log, &block
