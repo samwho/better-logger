@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Better::Logger::VERSION
   gem.authors       = ["Sam Rose"]
   gem.email         = ["samwho@lbak.co.uk"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{A better logging default for Ruby.}
+  gem.summary       = %q{A little tired of unconventional logging techniques in projects, this gem aims to introduce a logging convention.}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)

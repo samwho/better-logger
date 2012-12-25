@@ -15,40 +15,30 @@ module Better
         end
       end
 
-      def log level, message
-        if LEVELS[config.log_level] <= LEVELS[level.to_sym]
-          send level, message
-        end
-      end
-
-      def debug message
-        config.log_to.puts _format_message(message, __method__)
-      end
-
-      def info message
-        config.log_to.puts _format_message(message, __method__)
-      end
-
-      def warn message
-        config.log_to.puts _format_message(message, __method__)
-      end
-
-      def error message
-        config.error_to.puts _format_message(message, __method__)
-      end
-
-      def fatal message
-        config.error_to.puts _format_message(message, __method__)
-      end
+      def debug msg; _log config.log_to, __method__,   msg; end;
+      def info  msg; _log config.log_to, __method__,   msg; end;
+      def warn  msg; _log config.log_to, __method__,   msg; end;
+      def error msg; _log config.error_to, __method__, msg; end;
+      def fatal msg; _log config.error_to, __method__, msg; end;
 
       # Pseudo-private methods
 
-      def _format_message message, level = config.log_level
+      def _format msg, level = config.log_level
         if config.formatter
-          instance_exec message, level.to_sym, &config.formatter
+          instance_exec msg, level.to_sym, &config.formatter
         else
-          message
+          msg
         end
+      end
+
+      def _should_log? level
+        # :info <= :debug
+        # 1     <= 0
+        LEVELS[config.log_level] <= LEVELS[level.to_sym]
+      end
+
+      def _log io, level, msg
+        io.puts _format(msg, level) if _should_log? level
       end
     end
   end

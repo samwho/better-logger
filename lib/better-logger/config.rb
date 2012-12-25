@@ -4,8 +4,13 @@ module Better
       attr_writer :color, :formatter, :log_to, :datetime_format, :log_level,
         :error_to, :time_format
 
+      def color
+        @color = true if @color.nil?
+        @color
+      end
+
       def color?
-        @color ||= true
+        color
       end
 
       def log_to
