@@ -1,51 +1,51 @@
 module Better
   module Logger
     class Logger
-      attr_accessor :conf
+      attr_accessor :config
 
-      def initialize conf
-        @conf = conf
+      def initialize config
+        @config = config
 
-        if conf.log_to.is_a? String
-          conf.log_to = File.open(conf.log_to, 'a')
+        if config.log_to.is_a? String
+          config.log_to = File.open(config.log_to, 'a')
         end
 
-        if conf.error_to.is_a? String
-          conf.error_to = File.open(conf.error_to, 'a')
+        if config.error_to.is_a? String
+          config.error_to = File.open(config.error_to, 'a')
         end
       end
 
       def log level, message
-        if LEVELS[conf.log_level] <= LEVELS[level.to_sym]
+        if LEVELS[config.log_level] <= LEVELS[level.to_sym]
           send level, message
         end
       end
 
       def debug message
-        conf.log_to.puts _format_message(message, __method__)
+        config.log_to.puts _format_message(message, __method__)
       end
 
       def info message
-        conf.log_to.puts _format_message(message, __method__)
+        config.log_to.puts _format_message(message, __method__)
       end
 
       def warn message
-        conf.log_to.puts _format_message(message, __method__)
+        config.log_to.puts _format_message(message, __method__)
       end
 
       def error message
-        conf.error_to.puts _format_message(message, __method__)
+        config.error_to.puts _format_message(message, __method__)
       end
 
       def fatal message
-        conf.error_to.puts _format_message(message, __method__)
+        config.error_to.puts _format_message(message, __method__)
       end
 
       # Pseudo-private methods
 
-      def _format_message message, level = conf.log_level
-        if conf.formatter
-          instance_exec message, level.to_sym, &conf.formatter
+      def _format_message message, level = config.log_level
+        if config.formatter
+          instance_exec message, level.to_sym, &config.formatter
         else
           message
         end

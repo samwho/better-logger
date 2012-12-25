@@ -18,3 +18,5 @@ class Foo
 end
 
 Foo.new.bar
+
+log.info "Done."

@@ -27,9 +27,9 @@ module Better
       def formatter
         @formatter ||= lambda do |message, level|
           _level = level.to_s.ljust(5)
-          _time  = Time.now.strftime(conf.time_format)
+          _time  = Time.now.strftime(config.time_format)
 
-          if conf.color?
+          if config.color?
             case level
             when :debug
               _level = _level.magenta
