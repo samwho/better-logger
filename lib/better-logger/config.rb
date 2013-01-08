@@ -41,7 +41,7 @@ module Better
       end
 
       def time_format
-        @time_format ||= "%Y/%m/%d %H:%M:%S"
+        @time_format ||= "%Y/%m/%d %H:%M:%S.%L"
       end
 
       def formatter
@@ -64,7 +64,8 @@ module Better
             end
           end
 
-          "[#{_time}][#{_level}][#{caller[4]}] #{message}"
+          file_location = caller[4].sub(Dir.pwd + '/', '')
+          "[#{_time}][#{_level}][#{file_location}] #{message}"
         end
       end
     end
