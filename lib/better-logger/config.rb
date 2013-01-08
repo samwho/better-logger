@@ -64,7 +64,7 @@ module Better
             end
           end
 
-          "[#{_time}][#{_level}][#{caller[3]}] #{message}"
+          "[#{_time}][#{_level}][#{caller[4]}] #{message}"
         end
       end
     end
